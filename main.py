@@ -9,11 +9,24 @@ from dotenv import load_dotenv
 #looks in directory for current .env file and loads in the variables so we can use them later on in our program
 load_dotenv()
 
+#call the tool using a python decorator
+@tool
+def calculator(a: float, b: float) -> str: 
+    """Useful for performing basic arithmetic calculations with numbers"""
+    print("Tool has been called.")
+    return f"The sum of {a} and {b} is {a + b}"
+
+@tool
+def say_hello(name: str) -> str: 
+    """Useful for greeting a user"""
+    print("Tool has been called.")
+    return f"Hello {name}, I hope you are well today"
+
 def main() :
     #initialize LLM that acts like the brain
     model = ChatOpenAI(temperature=0)
 
-    tools = []
+    tools = [calculator, say_hello]
     agent_executor = create_react_agent(model, tools)
 
     print("Welcome! I'm your AI assistant. Type 'quit' to exit.")
